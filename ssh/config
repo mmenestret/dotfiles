@@ -1,0 +1,76 @@
+Host *
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_rsa
+
+Host maison
+  User mmenestret
+  HostName mmenestret.ddns.net
+  Port 9022
+
+Host *.cluster1
+  ServerAliveInterval    60
+  TCPKeepAlive           yes
+  ProxyCommand           ssh -W %h:%p smartlake@193.248.38.15 -p 22
+  ControlMaster          auto
+  ControlPath            ~/.ssh/mux-%r@%h:%p
+  ControlPersist         8h
+  User                   smartlake
+
+Host bastion-itg
+    User                   root
+    HostName               158.255.65.10
+    Port                   22
+    ProxyCommand           none
+    IdentityFile           ~/.ssh/id_rsa
+    BatchMode              yes
+    PasswordAuthentication no
+
+Host *.smartlake.lan.oxv.fr
+    ServerAliveInterval    60
+    TCPKeepAlive           yes
+    ProxyCommand           ssh -W %h:%p smartlake@158.255.65.10 -p 22
+    ControlMaster          auto
+    ControlPath            ~/.ssh/mux-%r@%h:%p
+    ControlPersist         8h
+    User                   smartlake
+    IdentityFile           ~/.ssh/id_rsa
+
+Host *.smartlake.aws.laposte.fr
+  ServerAliveInterval    60
+  TCPKeepAlive           yes
+  ProxyCommand           ssh -W %h:%p smartlake@52.17.173.107  -p 22
+  ControlMaster          auto
+  ControlPath            ~/.ssh/mux-%r@%h:%p
+  ControlPersist         8h
+  User                   smartlake
+  IdentityFile           ~/.ssh/id_rsa
+
+Host bourbaki*
+    ServerAliveInterval    60
+    TCPKeepAlive           yes
+    ProxyCommand           ssh -W %h:%p smartlake@local.probayes.net -p 31609
+    ControlMaster          auto
+    ControlPath            ~/.ssh/mux-%r@%h:%p
+    ControlPersist         8h
+    User                   smartlake
+    IdentityFile           ~/.ssh/id_rsa
+
+Host pbs-aws-compute1 pbs-aws-compute2 pbs-aws-compute3 pbs-aws-training pbs-aws-monitoring
+    ServerAliveInterval    60
+    TCPKeepAlive           yes
+    ProxyCommand           ssh -W %h:%p ec2-user@34.245.69.211 -i ~/.ssh/fraudia-key.pem
+    ControlMaster          auto
+    ControlPath            ~/.ssh/mux-%r@%h:%p
+    ControlPersist         8h
+    User                   ec2-user
+    IdentityFile           ~/.ssh/fraudia-key.pem
+
+Host pbs-aws-bastion
+    HostName	           34.245.69.211
+    ServerAliveInterval    60
+    TCPKeepAlive           yes
+    ProxyCommand           none
+    User                   ec2-user
+    Port		   22
+    IdentityFile           ~/.ssh/fraudia-key.pem

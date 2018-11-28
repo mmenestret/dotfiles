@@ -1,0 +1,42 @@
+[alias]
+	g = grep --break --heading --line-number
+        lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)'
+	ll = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold bluue %Creset' --abbrev-commit --decorate --numstat
+	st = status
+	co = checkout
+	cob = checkout -b
+	com = checkout master
+	whatadded = log --diff-filter=A
+	amend = commit --amend
+	who = shortlog -sne
+
+[user]
+	name = Martin MENESTRET
+	email = martinmenestret@gmail.com
+[push]
+	default = simple
+
+[core]
+	editor = vim
+	excludesfile = /Users/mmenestret/.gitignore_global
+
+[credential]
+	helper = cache
+
+[http]
+	sslVerify = false
+
+[grep]
+	lineNumber = true
+	extendRegexp = true
+
+[color "diff"]
+	meta = yellow bold ul  
+	frag = cyan bold ul
+	old = red bold  
+	new = green bold 
+
+[color "status"]  
+	added = green bold  
+	changed = yellow bold  
+	untracked = red bold
